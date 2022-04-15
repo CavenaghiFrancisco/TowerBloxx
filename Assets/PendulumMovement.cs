@@ -21,6 +21,7 @@ public class PendulumMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        moveSpeed += new Vector3(0,0,0.05f * Time.deltaTime);
         Move();
     }
 
