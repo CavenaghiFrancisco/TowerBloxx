@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DepartmentSpawn : MonoBehaviour
 {
@@ -24,6 +26,10 @@ public class DepartmentSpawn : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !deparmentAlreadySpawned)
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             deparmentAlreadySpawned = true;
             moveUp = true;
             lasDepartmentSpawned = Instantiate(departmentPrefab, transform.position, Quaternion.identity);

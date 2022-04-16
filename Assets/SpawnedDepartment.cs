@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class SpawnedDepartment : MonoBehaviour
     private Renderer rend;
     private bool failedSpawn = false;
     public int id;
+    public static Action OnDamageReceived;
 
     private void Awake()
     {
@@ -30,6 +32,10 @@ public class SpawnedDepartment : MonoBehaviour
             else
             {
                 failedSpawn = true;
+                if (OnDamageReceived != null)
+                {
+                    OnDamageReceived();
+                }
             }
         }
         else
