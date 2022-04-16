@@ -26,7 +26,7 @@ public class DepartmentSpawn : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !deparmentAlreadySpawned)
         {
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject() || EventSystem.current.currentSelectedGameObject != null)
             {
                 return;
             }
