@@ -6,13 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    private int hearts = 3;
+    [SerializeField] private List<GameObject> heartsList;
+    private int hearts;
 
     private void Awake()
     {
         SpawnedDepartment.OnDamageReceived += UpdateHearts;
+        hearts = 3;
     }
 
+    private void Update()
+    {
+        Debug.Log(hearts);
+    }
 
     private void UpdateHearts()
     {
@@ -20,13 +26,14 @@ public class UIManager : MonoBehaviour
         switch (hearts)
         {
             case 2:
-                gameObject.transform.GetChild(5).gameObject.SetActive(false);
+                heartsList[0].SetActive(false);
                 break;
             case 1:
-                gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                heartsList[1].SetActive(false);
                 break;
             case 0:
-                gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                heartsList[2].SetActive(false);
+                Time.timeScale = 0;
                 break;
         }
     }
@@ -47,6 +54,11 @@ public class UIManager : MonoBehaviour
 
     public void ChangeScene(int scene)
     {
+        SpawnedDepartment.OnDamageReceived -= UpdateHearts;
+        if(Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
         SceneManager.LoadScene(scene);
     }
 
