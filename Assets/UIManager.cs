@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
             case 0:
                 heartsList[2].SetActive(false);
                 Time.timeScale = 0;
+                SpawnedDepartment.OnDamageReceived -= UpdateHearts;
+                SceneManager.LoadScene(0);
                 break;
         }
     }
