@@ -9,6 +9,7 @@ public class SpawnedDepartment : MonoBehaviour
     private Renderer rend;
     public int id;
     public static Action OnDamageReceived;
+    public static Action OnCorrectLanding;
     private RaycastHit hitDetect;
     private bool hit;
 
@@ -26,6 +27,10 @@ public class SpawnedDepartment : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.identity;
             Destroy(rb);
+            if(OnCorrectLanding != null)
+            {
+                OnCorrectLanding();
+            }
             Destroy(GetComponent<SpawnedDepartment>());
         }
         else if(collision.transform.CompareTag("Floor"))
