@@ -72,14 +72,14 @@ public class DepartmentSpawn : MonoBehaviour
                 speed += Time.deltaTime * 0.5f;
                 yield return null;
             }
-            speed = 0;
+            speed = 0.5f;
             while(city.transform.Find("Departments").transform.GetChild(city.transform.Find("Departments").transform.childCount - 1).transform.position.x + 1 < limits[0].transform.position.x)
             {
                 city.transform.Find("Departments").transform.position = Vector3.Lerp(city.transform.Find("Departments").position, limits[0].transform.position, speed * Time.deltaTime);
                 speed += Time.deltaTime * 0.5f;
                 yield return null;
             }
-            speed = 0;
+            speed = 0.5f;
             yield return null;
         }
         
