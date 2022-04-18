@@ -8,13 +8,15 @@ public class DepartmentSpawn : MonoBehaviour
 {
     [SerializeField] private GameObject departmentPrefab;
     [SerializeField] private GameObject city;
+    [SerializeField] private GameObject[] limits;
     private MeshRenderer mr;
     private Renderer rend;
     private bool deparmentAlreadySpawned = false;
     private bool moveUp = false;
+    private bool inMovement = false;
     private GameObject lasDepartmentSpawned;
     private int departmentID = 0;
-
+    private float speed = 0;
 
     private void Awake()
     {
@@ -39,6 +41,11 @@ public class DepartmentSpawn : MonoBehaviour
         {
             city.transform.position = Vector3.Lerp(city.transform.position, city.transform.position - new Vector3(0,rend.bounds.size.y/1.7f,0), Time.deltaTime);
         }
+        if(city.transform.Find("Departments").transform.childCount >= 15 && !inMovement)
+        {
+            inMovement = true;
+            StartCoroutine(MoveDepartments());
+        }
     }
 
     private IEnumerator DepartmentSpawned()
@@ -46,7 +53,6 @@ public class DepartmentSpawn : MonoBehaviour
         mr.enabled = false;
         lasDepartmentSpawned.AddComponent<SpawnedDepartment>();
         lasDepartmentSpawned.GetComponent<SpawnedDepartment>().id = departmentID;
-        lasDepartmentSpawned.transform.SetParent(city.transform);
         departmentID++;
         yield return new WaitForSeconds(1f);
         moveUp = false;
@@ -55,4 +61,28 @@ public class DepartmentSpawn : MonoBehaviour
         deparmentAlreadySpawned = false;
     }
 
+
+    private IEnumerator MoveDepartments()
+    {
+        while (true)
+        {
+            while (city.transform.Find("Departments").transform.GetChild(city.transform.Find("Departments").transform.childCount - 1).transform.position.x - 1 > limits[1].transform.position.x)
+            {
+                city.transform.Find("Departments").transform.position  = Vector3.Lerp(city.transform.Find("Departments").transform.position, limits[1].transform.position, speed * Time.deltaTime);
+                speed += Time.deltaTime * 0.5f;
+                yield return null;
+            }
+            speed = 0;
+            while(city.transform.Find("Departments").transform.GetChild(city.transform.Find("Departments").transform.childCount - 1).transform.position.x + 1 < limits[0].transform.position.x)
+            {
+                city.transform.Find("Departments").transform.position = Vector3.Lerp(city.transform.Find("Departments").position, limits[0].transform.position, speed * Time.deltaTime);
+                speed += Time.deltaTime * 0.5f;
+                yield return null;
+            }
+            speed = 0;
+            yield return null;
+        }
+        
+        
+    }
 }

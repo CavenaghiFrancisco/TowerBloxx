@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SpawnedDepartment : MonoBehaviour
 {
+    private GameObject city;
     private Rigidbody rb;
     private Renderer rend;
     public int id;
@@ -15,39 +16,28 @@ public class SpawnedDepartment : MonoBehaviour
 
     private void Awake()
     {
+        city = GameObject.FindGameObjectWithTag("City");
         rb = GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
     }
 
     private void OnCollisionEnter(Collision collision)
     { 
-        if (Mathf.Abs(collision.transform.position.x - transform.position.x) < rend.bounds.size.x / 2 || id == 0)
+        if (Mathf.Abs(collision.transform.position.x - transform.position.x) < rend.bounds.size.x / 2 && collision.transform.CompareTag("Department") || id == 0)
         {
+            Debug.Log(id);
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             transform.rotation = Quaternion.identity;
             Destroy(rb);
-            if(OnCorrectLanding != null)
-            {
-                OnCorrectLanding();
-            }
+            OnCorrectLanding();
+            transform.SetParent(city.transform.Find("Departments").transform);
             Destroy(GetComponent<SpawnedDepartment>());
-        }
-        else if(collision.transform.CompareTag("Floor"))
-        {
-            if (OnDamageReceived != null)
-            {
-                OnDamageReceived();
-            }
-            Destroy(gameObject);
         }
         else
         {
-            if (OnDamageReceived != null)
-            {
-                OnDamageReceived();
-            }
-            Destroy(gameObject, 0.1f);
+            OnDamageReceived();
+            Destroy(gameObject);
         }
     }
 
