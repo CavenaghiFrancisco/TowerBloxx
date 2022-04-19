@@ -12,6 +12,7 @@ public class DioButton : MonoBehaviour
     {
         if (!dioAppeared)
         {
+            dioAppeared = true;
             dioSound.Play();
             roadRollerDA.AddComponent<Rigidbody>();
         }
