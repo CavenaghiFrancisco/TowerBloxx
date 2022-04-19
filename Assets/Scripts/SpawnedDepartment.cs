@@ -31,6 +31,7 @@ public class SpawnedDepartment : MonoBehaviour
         audio.Play();
         if (Mathf.Abs(collision.transform.position.x - transform.position.x) < rend.bounds.size.x / 2 && collision.transform.CompareTag("Department") || id == 0)
         {
+            transform.GetChild(0).gameObject.SetActive(true);
             Debug.Log(id);
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
