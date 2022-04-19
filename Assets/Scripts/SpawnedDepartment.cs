@@ -8,6 +8,7 @@ public class SpawnedDepartment : MonoBehaviour
     private GameObject city;
     private Rigidbody rb;
     private Renderer rend;
+    private Collider coll;
     private AudioSource audio;
     public int id;
     public static Action OnDamageReceived;
@@ -20,6 +21,7 @@ public class SpawnedDepartment : MonoBehaviour
         audio = GetComponent<AudioSource>();
         city = GameObject.FindGameObjectWithTag("City");
         rb = GetComponent<Rigidbody>();
+        coll = GetComponent<Collider>();
         rend = GetComponent<Renderer>();
     }
 
@@ -40,9 +42,16 @@ public class SpawnedDepartment : MonoBehaviour
         }
         else
         {
-            OnDamageReceived();
-            Destroy(gameObject);
+            StartCoroutine(DestroyDepartment());
         }
+    }
+
+    private IEnumerator DestroyDepartment()
+    {
+        Destroy(coll);
+        Destroy(gameObject, 0.5f);
+        yield return new WaitForSeconds(0.4f);
+        OnDamageReceived();
     }
 
 }

@@ -27,7 +27,7 @@ public class PendulumMovement : MonoBehaviour
         Move();
     }
 
-    public void ChangeMoveDir()
+    private void ChangeMoveDir()
     {
         if (transform.rotation.z > rightAngle)
         {
@@ -39,7 +39,7 @@ public class PendulumMovement : MonoBehaviour
         }
     }
 
-    public void Move()
+    private void Move()
     {
         ChangeMoveDir();
 
@@ -47,8 +47,7 @@ public class PendulumMovement : MonoBehaviour
         {
             rb.angularVelocity = moveSpeed;
         }
-
-        if (!movingClockwise)
+        else
         {
             rb.angularVelocity = -1 * moveSpeed;
         }

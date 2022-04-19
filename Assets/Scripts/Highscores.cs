@@ -31,6 +31,7 @@ public class Highscores : MonoBehaviour
                 Debug.Log("Failed");
             }
         });
+        ShowScores();
     }
 
     public void ShowScores()
