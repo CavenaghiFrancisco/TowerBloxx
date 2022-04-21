@@ -40,9 +40,8 @@ public class UIManager : MonoBehaviour
                 break;
             case 0:
                 heartsList[2].SetActive(false);
-                Time.timeScale = 0;
                 waitPanel.SetActive(true);
-                StartCoroutine(Wait());
+                StartCoroutine(WaitScreen());
                 SpawnedDepartment.OnDamageReceived -= UpdateHearts;
                 SpawnedDepartment.OnCorrectLanding -= UpdateScore;
                 break;
@@ -89,11 +88,11 @@ public class UIManager : MonoBehaviour
         return score;
     }
 
-    private IEnumerator Wait()
+    private IEnumerator WaitScreen()
     {
         yield return new WaitForSeconds(2);
-        Time.timeScale = 1;
         loseScreen.SetActive(true);
+        waitPanel.SetActive(false);
     }
 
 }
