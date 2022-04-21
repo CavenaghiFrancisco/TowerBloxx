@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private List<GameObject> heartsList;
     [SerializeField] private Text text;
     [SerializeField] private GameObject loseScreen;
+    [SerializeField] private GameObject waitPanel;
     private int hearts;
     private int score = 0;
 
@@ -39,8 +40,9 @@ public class UIManager : MonoBehaviour
                 break;
             case 0:
                 heartsList[2].SetActive(false);
-                loseScreen.SetActive(true);
                 Time.timeScale = 0;
+                waitPanel.SetActive(true);
+                StartCoroutine(Wait());
                 SpawnedDepartment.OnDamageReceived -= UpdateHearts;
                 SpawnedDepartment.OnCorrectLanding -= UpdateScore;
                 break;
@@ -85,6 +87,13 @@ public class UIManager : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
+        Time.timeScale = 1;
+        loseScreen.SetActive(true);
     }
 
 }
